@@ -1,0 +1,54 @@
+// I have moved classNames to its own single file after testing, rather than as a npm package.
+// this is to prevent dependency issues and to keep the dependency more light weight.
+
+/**
+ * This library was added because it helps tremendously with joining classNames of different types together.
+ * Especially javascript object properties alongside strings.
+ */
+
+/*!
+	Copyright (c) 2018 Jed Watson.
+	Licensed under the MIT License (MIT), see
+	http://jedwatson.github.io/classnames
+*/
+/* global define */
+
+var hasOwn = {}.hasOwnProperty;
+
+export function classNames() {
+  var classes = [];
+
+  for (var i = 0; i < arguments.length; i++) {
+    var arg = arguments[i];
+    if (!arg) continue;
+
+    var argType = typeof arg;
+
+    if (argType === "string" || argType === "number") {
+      classes.push(arg);
+    } else if (Array.isArray(arg)) {
+      if (arg.length) {
+        var inner = classNames.apply(null, arg);
+        if (inner) {
+          classes.push(inner);
+        }
+      }
+    } else if (argType === "object") {
+      if (
+        arg.toString !== Object.prototype.toString &&
+        !arg.toString.toString().includes("[native code]")
+      ) {
+        classes.push(arg.toString());
+        continue;
+      }
+
+      for (var key in arg) {
+        if (hasOwn.call(arg, key) && arg[key]) {
+          classes.push(key);
+        }
+      }
+    }
+  }
+
+  return classes.join(" ");
+}

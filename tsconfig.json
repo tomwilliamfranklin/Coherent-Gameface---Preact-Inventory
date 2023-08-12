@@ -1,0 +1,18 @@
+{
+  "compilerOptions": {
+    "target": "ES2020",
+    "module": "ESNext",
+    // had to change this to node. Looks like a ts bug?
+    "moduleResolution": "node",
+    "noEmit": true,
+    "allowJs": true,
+    "checkJs": true,
+    "jsx": "react-jsx",
+    "jsxImportSource": "preact"
+  },
+  "include": ["node_modules/vite/client.d.ts", "**/*"],
+  "paths": {
+    // so that our src links can be simple.
+    "@/*": ["./src/*"]
+  }
+}

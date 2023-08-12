@@ -1,0 +1,330 @@
+/* 
+	I have kept to the specifications of coherent's supported css properties to mimic this in coherent:
+	https://docs.coherent-labs.com/cpp-gameface/content_development/supported_features_tables/cssproperties/#
+
+
+  Usually, I would have a scss / sass file for each seperate component. However for this test I have just thrown everything into one file. 
+
+*/
+
+:root {
+  --primary: #84521e;
+}
+
+@function toRem($size) {
+  $remSize: $size / 16px;
+  @return #{$remSize}rem;
+}
+
+@font-face {
+  font-family: "MenusPrimaryFont";
+  src: url("../assets/Fonts/MenusPrimaryFont.ttf");
+}
+
+@font-face {
+  font-family: "NumericsFont";
+  src: url("../assets/Fonts/NumericsFont.otf");
+}
+
+@font-face {
+  font-family: "ToolTipDescription";
+  src: url("../assets/Fonts/ToolTipDescription.ttf");
+}
+
+html {
+  // because I am using rem, the size of everything can be adjusted by the fontsize, in coherent we can use the html font size to scale the entire UI, using the scale factor.
+  // https://docs.coherent-labs.com/cpp-gameface/content_development/scalableui/
+  font-size: 16px;
+
+  // prevent text highlighting.
+  -moz-user-select: none;
+  user-select: none;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+}
+
+/*
+The class structure is set up this way to be easily maintainable and readable, by containing all of the components elements under one class name.
+*/
+
+.App {
+  &_root {
+    position: relative;
+    // With game components, i do not go by 100vw/100vh, i do it by specific dimensions adjusted to the font size. this means it'll scale with the resizing of the window (in coherent).
+    height: toRem(1080px);
+    width: toRem(1920px);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    // when creating UI in coherent, its important to only have pointer-events in actual elements. This is so that the UI on top of the game does not consume clicks directed at gameplay.
+    pointer-events: none;
+  }
+  &_content {
+    position: relative;
+    width: toRem(1000px);
+    height: toRem(800px);
+  }
+  &_background {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    box-sizing: border-box;
+    background-image: url("../assets/Images/Background/UI_Background.png");
+    background-size: 100% 100%;
+    background-repeat: no-repeat;
+  }
+}
+
+.InventoryModule {
+  &_root {
+    position: relative;
+    // Usually would use a Adobe XD or figma file for exact measurements. Went off image sizes for this test.
+    width: toRem(1115px);
+    height: toRem(932px);
+    top: toRem(-50px);
+    color: var(--primary);
+    display: flex;
+    flex-direction: column;
+    background-image: url("../assets/Images/InventoryMain/IMG_InventoryPanel.png");
+    align-items: center;
+
+    pointer-events: auto;
+  }
+  &_header {
+    position: relative;
+    height: toRem(200px);
+    left: toRem(0px);
+    width: toRem(305px);
+  }
+  &_content {
+    position: relative;
+    width: toRem(910px);
+    height: toRem(562px);
+    margin: toRem(40px);
+    background-image: url("../assets/Images/InventoryMain/IMG_GridBackground.png");
+    background-size: 100% 100%;
+    background-repeat: no-repeat;
+  }
+  &_grid {
+    position: absolute;
+    width: toRem(940px);
+    height: toRem(597px);
+
+    // making the grid absolute grow from the center.
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+
+    background-image: url("../assets/Images/InventoryMain/IMG_GridBorder.png");
+    background-size: 100% 100%;
+    background-repeat: no-repeat;
+  }
+
+  &_corner {
+    position: absolute;
+    bottom: toRem(-20px);
+    left: toRem(-20px);
+    // i only recieved one corner brace, the design shows 4 distinctive ones (you can tell by the white glow at the top of each one), so im just going to rotate this one.
+    background-image: url("../assets/Images/InventoryMain/IMG_CornerBrace.png");
+    width: toRem(91px);
+    height: toRem(97px);
+    &.topLeft {
+      top: toRem(-20px);
+      left: toRem(-20px);
+      transform: rotate(90deg);
+    }
+    &.topRight {
+      top: toRem(-20px);
+      right: toRem(-20px);
+      left: unset;
+      transform: rotate(180deg);
+    }
+    &.bottomRight {
+      top: unset;
+      right: toRem(-20px);
+      left: unset;
+      transform: rotate(270deg);
+    }
+  }
+
+  &_decorShape {
+    position: absolute;
+    width: toRem(80px);
+    height: toRem(87px);
+    top: 50%;
+    transform: translateY(-50%) scaleX(-1);
+    left: toRem(-60px);
+    background-image: url("../assets/Images/InventoryMain/IMG_DecorShape_Other.png");
+    // really hard to eye ball these shadows from the picture. normally would take straight from Adobe XD / figma.
+    filter: drop-shadow(toRem(-3px) toRem(8px) toRem(1px) rgba(0, 0, 0, 0.3));
+    &.right {
+      left: unset;
+      right: toRem(-60px);
+      transform: translateY(-50%);
+    }
+  }
+
+  &_topDecorShape {
+    position: absolute;
+    width: toRem(97px);
+    height: toRem(89px);
+    top: toRem(25px);
+    left: 50%;
+    transform: translateX(-50%);
+    background-image: url("../assets/Images/InventoryMain/IMG_DecorShape_Top.png");
+    filter: drop-shadow(toRem(0px) toRem(9px) toRem(1px) rgba(0, 0, 0, 0.3));
+    &.right {
+      left: unset;
+      right: toRem(-60px);
+      transform: translateY(-50%);
+    }
+  }
+
+  &_inventoryIcon {
+    position: absolute;
+    width: toRem(203px);
+    height: toRem(136px);
+    top: toRem(110px);
+    left: 50%;
+    transform: translateX(-50%);
+    background-image: url("../assets/Images/InventoryMain/IMG_InventoryIcon.png");
+    &.right {
+      left: unset;
+      right: toRem(-60px);
+      transform: translateY(-50%);
+    }
+  }
+}
+
+.InventoryGrid {
+  &_root {
+    position: relative;
+    width: toRem(920px);
+    margin-top: toRem(0px);
+    margin-left: toRem(0px);
+    height: toRem(580px);
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-start;
+    justify-content: flex-start;
+    align-content: flex-start;
+  }
+}
+
+.InventoryButton {
+  &_root {
+    position: relative;
+    // the image size of IMG_SlotHighlight was bigger than the square of the grid
+    width: toRem(113px);
+    height: toRem(112px);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    left: toRem(3px);
+  }
+  &_content {
+    width: toRem(100px);
+    height: toRem(100px);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    &.focused {
+      & > .InventoryButton_background {
+        opacity: 1;
+      }
+    }
+  }
+  &_background {
+    position: absolute;
+    transition: opacity 0.2s ease;
+    width: toRem(100px);
+    height: toRem(100px);
+    opacity: 0;
+    background-image: unset;
+    background-size: 100% 100%;
+    background-repeat: no-repeat;
+    background-image: url("../assets/Images/InventoryMain/IMG_SlotHighlight.png");
+  }
+  &_number {
+    position: absolute;
+    left: toRem(15px);
+    top: toRem(15px);
+    font-family: NumericsFont;
+  }
+  &_slot {
+    position: relative;
+    padding: toRem(40px);
+
+    // I would not usually use this, due to coherent's spotty support of z-index.
+    // however when testing on some browsers, the dragging would drag the entire background with the icon
+    // to prevent this, a sort of hack is to give it a z-index, seperating it from the background.
+    z-index: 0;
+
+    // animation that plays everytime an item is dropped into a new slot
+    &.droppedIn {
+      animation-name: DropIn;
+      animation-duration: 0.1s;
+      animation-timing-function: ease-in-out;
+    }
+  }
+  &_icon {
+    width: toRem(55px);
+    height: toRem(55px);
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-position: center;
+    filter: drop-shadow(toRem(-5px) toRem(5px) toRem(9px) rgba(0, 0, 0, 0.3));
+  }
+  &_tooltip {
+    // depending on the version of coherent, transitions can be a problem.
+    transition: opacity 0.2s ease;
+    position: absolute;
+    width: toRem(212px);
+    height: toRem(104px);
+    padding-left: toRem(30px);
+    padding-top: toRem(25px);
+    z-index: 1;
+    top: 50%;
+    left: 50%;
+    opacity: 0;
+    pointer-events: none;
+    background-image: url("../assets/Images/Tooltip/IMG_TooltipPanel.png");
+    background-repeat: no-repeat;
+    &_title {
+      // usually would have something fo,prer sophisticated for keeping the same font sizes throughout the UI. Most likely some kind of mixin.
+      font-size: toRem(24px);
+      text-transform: uppercase;
+      font-family: MenusPrimaryFont;
+    }
+    &_desc {
+      font-size: toRem(16px);
+      font-family: ToolTipDescription;
+    }
+    &_weight {
+      font-size: toRem(16px);
+      position: absolute;
+      bottom: toRem(40px);
+      right: toRem(40px);
+      font-family: NumericsFont;
+    }
+    &.focused {
+      opacity: 1;
+    }
+  }
+}
+
+@keyframes DropIn {
+  0% {
+    width: toRem(90px);
+    height: toRem(90px);
+  }
+  100% {
+    width: toRem(55px);
+    height: toRem(55px);
+  }
+}
