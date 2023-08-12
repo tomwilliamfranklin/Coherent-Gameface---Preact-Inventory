@@ -1,4 +1,4 @@
-Hi ! this is the technical test, made by Tom Franklin.
+Hi ! this is the technical test submission by Tom Franklin.
 
 This project was made in Preact. NPM was used as the chosen package manager, you will need to install npm and node on your machine to run locally.
 
