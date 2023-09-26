@@ -1,4 +1,4 @@
-Hi ! this is the technical test, made by Tom Franklin.
+Hi ! this is an example of a inventory system, to demonstrate Coherent Gameface skills, made by Tom Franklin.
 
 This project was made in Preact. NPM was used as the chosen package manager, you will need to install npm on your machine.
 
@@ -21,6 +21,6 @@ The inventory objects use a enum system for defining what item goes where, and e
 
 The buttons all listen to an observer inside the InventoryData class, this class is responsible for the storage and mutation of the actual inventory data. I chose to do this over storing it inside the preact state of the parent component, as this prevents unnecessary redraws of the buttons (which are drawn via a for loop of the inventorydata's grid size). 
 
-I have tried to mimic the style of the design the best i can given the single image, some liberties were taken, for example, I was only given one IMG_CornerBrace, despite all 4 having unique light reflections on their top facing part, so I have just rotated the same one on all 4 corners. I added a basic animation for when you place an object in a slot, (or when they swap). I have also added a fade in animation to the tooltip. 
+I do not own the art assets used in this example, I did not create them. They were given to me freely for a previous technical test.
 
 Have fun! and please do not hesitate to email with any questions.
