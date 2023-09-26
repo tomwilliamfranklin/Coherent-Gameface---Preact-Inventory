@@ -1,6 +1,6 @@
 Hi ! this is an example of a inventory system, to demonstrate Coherent Gameface skills, made by Tom Franklin.
 
-This project was made in Preact. NPM was used as the chosen package manager, you will need to install npm on your machine.
+This project was made in Preact. NPM was used as the chosen package manager, you will need to install npm and node on your machine to run locally.
 
 https://docs.npmjs.com/downloading-and-installing-node-js-and-npm
 https://nodejs.org/en
